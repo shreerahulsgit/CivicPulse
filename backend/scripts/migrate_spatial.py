@@ -115,6 +115,39 @@ def column_exists(table: str, column: str) -> bool:
     return result.scalar() > 0
 
 
+def index_exists(table: str, index_name: str) -> bool:
+    """Check if an index already exists in a table."""
+    result = db.execute(text(
+        "SELECT COUNT(*) FROM information_schema.statistics "
+        "WHERE table_schema = DATABASE() "
+        "AND table_name = :table AND index_name = :index_name"
+    ), {"table": table, "index_name": index_name})
+    return result.scalar() > 0
+
+
+def ensure_ward_geometries_schema() -> None:
+    """Backfill ward_geometries for older databases that lack the spatial column."""
+    if not column_exists("ward_geometries", "boundary"):
+        db.execute(text(
+            "ALTER TABLE ward_geometries "
+            "ADD COLUMN boundary GEOMETRY NULL"
+        ))
+        db.commit()
+        print("[OK] Added missing ward_geometries.boundary column")
+
+    if not index_exists("ward_geometries", "idx_wg_boundary"):
+        try:
+            db.execute(text(
+                "ALTER TABLE ward_geometries "
+                "ADD SPATIAL INDEX idx_wg_boundary (boundary)"
+            ))
+            db.commit()
+            print("[OK] Added ward_geometries spatial index")
+        except Exception as e:
+            db.rollback()
+            print(f"[WARN] Could not add ward_geometries spatial index: {e}")
+
+
 def run_ddl():
     """Create tables."""
     for stmt in DDL_STATEMENTS:
@@ -130,6 +163,8 @@ def run_ddl():
                 print(f"[SKIP] Table already exists")
             else:
                 print(f"[ERROR] {e}")
+
+    ensure_ward_geometries_schema()
 
     for table, column, stmt in ALTER_STATEMENTS:
         if column_exists(table, column):

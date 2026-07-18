@@ -1,0 +1,53 @@
+# ── Environment files ────────────────────────────────────────────────────────
+.env
+.env.*
+*/.env
+*.local
+
+# ── Backend / Python ────────────────────────────────────────────────────────
+backend/__pycache__/
+backend/**/*.py[cod]
+backend/.pytest_cache/
+backend/.mypy_cache/
+backend/.ruff_cache/
+backend/.coverage
+backend/coverage.xml
+backend/htmlcov/
+backend/venv/
+backend/.venv/
+
+# ── Frontend / Node / Vite ───────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+frontend/.turbo/
+frontend/.parcel-cache/
+frontend/.next/
+frontend/.nuxt/
+frontend/.svelte-kit/
+frontend/.eslintcache
+frontend/*.tsbuildinfo
+
+# ── Logs ────────────────────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ── Editor / OS files ───────────────────────────────────────────────────────
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ── Misc generated data ─────────────────────────────────────────────────────
+backend/firebase-service-account.json

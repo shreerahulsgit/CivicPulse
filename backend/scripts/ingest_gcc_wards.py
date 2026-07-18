@@ -50,6 +50,30 @@ for zone_no, wards in _zone_ward_ranges.items():
         WARD_ZONE_MAP[w] = zone_no
 
 
+def column_exists(db, table: str, column: str) -> bool:
+    """Check whether a column exists in the current database."""
+    result = db.execute(text(
+        "SELECT COUNT(*) FROM information_schema.columns "
+        "WHERE table_schema = DATABASE() "
+        "AND table_name = :table AND column_name = :column"
+    ), {"table": table, "column": column})
+    return result.scalar() > 0
+
+
+def ensure_ward_geometry_schema(db) -> None:
+    """Backfill missing ward_geometries.boundary for older databases."""
+    if column_exists(db, "ward_geometries", "boundary"):
+        return
+
+    print("[WARN] ward_geometries.boundary is missing; adding compatibility column")
+    db.execute(text(
+        "ALTER TABLE ward_geometries "
+        "ADD COLUMN boundary GEOMETRY NULL"
+    ))
+    db.commit()
+    print("[OK] ward_geometries.boundary added")
+
+
 def ingest():
     data_file = os.path.join(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -68,6 +92,8 @@ def ingest():
     print(f"[INFO] Loaded {len(features)} features from {data_file}")
 
     db = SessionLocal()
+
+    ensure_ward_geometry_schema(db)
 
     # ── Get GCC jurisdiction ID ──────────────────────────────────────────────
     result = db.execute(text(

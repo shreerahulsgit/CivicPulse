@@ -35,6 +35,8 @@ from app.api.geo import router as geo_router
 from app.api.categories import router as categories_router
 from app.api.zonal_officer import router as zonal_router
 from app.api.forum import router as forum_router
+from app.database.session import SessionLocal
+from app.services.lookup_seed_service import seed_default_categories
 from app.services.cloudinary_service import configure_cloudinary
 from app.scheduler import start_scheduler, stop_scheduler
 
@@ -54,6 +56,15 @@ async def lifespan(app: FastAPI):
     logger.info("Starting CivicPulse API…")
     verify_connection()
     logger.info("Database connection verified ✓")
+
+    db = SessionLocal()
+    try:
+        created = seed_default_categories(db)
+        if created:
+            logger.info("Seeded %s default complaint categories ✓", created)
+    finally:
+        db.close()
+
     configure_cloudinary()
     logger.info("Cloudinary SDK configured ✓")
     start_scheduler(interval_minutes=30)

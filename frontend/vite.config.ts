@@ -20,6 +20,9 @@ export default defineConfig({
       // Allow Firebase Google Sign-In popup to call window.close()
       'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
     },
+    allowedHosts: [
+      "lab.zenfrost.xyz"
+    ],
     proxy: {
       '/api': {
         target: 'http://localhost:8000',

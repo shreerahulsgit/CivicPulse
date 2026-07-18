@@ -431,10 +431,10 @@ def admin_list_wards(
     wards = db.query(Ward).order_by(Ward.ward_number).all()
     result = []
     for w in wards:
-        zone_name = w.zone.name if w.zone else "Unknown"
+        zone_name = w.zone.zone_name if w.zone else "Unknown"
         result.append(WardItem(
             id=w.id,
-            name=w.name,
+            name=w.ward_name,
             ward_number=w.ward_number,
             zone_name=zone_name,
         ))

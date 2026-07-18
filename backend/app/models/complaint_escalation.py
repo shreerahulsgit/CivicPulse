@@ -58,7 +58,12 @@ class ComplaintEscalation(Base):
     )
 
     # ── Relationships ─────────────────────────────────────────────────────────
-    complaint   = relationship("Complaint",   foreign_keys=[complaint_id], lazy="selectin")
+    complaint   = relationship(
+        "Complaint",
+        foreign_keys=[complaint_id],
+        lazy="selectin",
+        overlaps="escalations",
+    )
     escalated_by_user = relationship("User", foreign_keys=[escalated_by],  lazy="selectin")
 
     def __repr__(self) -> str:

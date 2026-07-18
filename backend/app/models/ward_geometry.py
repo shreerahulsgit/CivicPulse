@@ -45,7 +45,7 @@ class WardGeometry(Base):
     )
 
     # ── Relationships ────────────────────────────────────────────────────────
-    ward = relationship("Ward", lazy="selectin")
+    ward = relationship("Ward", lazy="selectin", overlaps="geometry")
 
     def __repr__(self) -> str:
         return f"<WardGeometry ward_id={self.ward_id} centroid=({self.centroid_lat}, {self.centroid_lng})>"

@@ -69,7 +69,7 @@ const STATS = (complaints: Complaint[]) => [
 export function StatsSection({ complaints, isLoading }: StatsSectionProps) {
   if (isLoading) {
     return (
-      <div className="flex gap-3 px-4 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
+      <div className="grid grid-flow-col auto-cols-[120px] gap-3 px-4 overflow-x-auto pb-1 md:flex md:px-4 md:overflow-visible" style={{ scrollbarWidth: 'none' }}>
         {[0, 1, 2, 3].map(i => <SkeletonStat key={i} />)}
       </div>
     )
@@ -85,16 +85,15 @@ export function StatsSection({ complaints, isLoading }: StatsSectionProps) {
       variants={stagger.container}
       initial="hidden"
       animate="show"
-      className="flex gap-3 px-4 overflow-x-auto pb-1"
+      className="grid grid-flow-col auto-cols-[120px] gap-3 px-4 overflow-x-auto pb-1 md:flex md:px-4 md:overflow-visible"
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
     >
       {stats.map(({ label, value, Icon, iconBg, color, border }) => (
         <motion.div
           key={label}
           variants={fadeUp}
-          className="flex-shrink-0 rounded-2xl border bg-white p-3.5 flex flex-col gap-2.5"
+          className="flex-shrink-0 rounded-2xl border bg-white p-3.5 flex flex-col gap-2.5 md:flex-1 md:min-w-0 md:w-0"
           style={{
-            width: '108px',
             borderColor: border,
             boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
           }}
@@ -117,9 +116,8 @@ export function StatsSection({ complaints, isLoading }: StatsSectionProps) {
       {complaints.length > 0 && (
         <motion.div
           variants={fadeUp}
-          className="flex-shrink-0 rounded-2xl border p-3.5 flex flex-col gap-2.5"
+          className="flex-shrink-0 rounded-2xl border p-3.5 flex flex-col gap-2.5 md:flex-1 md:min-w-0 md:w-0"
           style={{
-            width: '108px',
             background: '#111827',
             borderColor: '#1F2937',
             boxShadow: '0 2px 8px rgba(0,0,0,0.15)',

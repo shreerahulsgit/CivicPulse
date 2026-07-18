@@ -6,14 +6,11 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  City,
   GoogleLogo,
   Envelope,
   Lock,
   User,
   Phone,
-  Eye,
-  EyeSlash,
   Shield,
   UserGear,
   WarningCircle,
@@ -47,7 +44,6 @@ export default function LoginPage() {
   const [citizenForm, setCitizenForm]         = useState({ full_name: '', email: '', phone: '', password: '' })
   const [citizenError, setCitizenError]       = useState<string | null>(null)
   const [citizenLoading, setCitizenLoading]   = useState(false)
-  const [showCitizenPw, setShowCitizenPw]     = useState(false)
   const [showStaff, setShowStaff]             = useState(false)
   const [staffTab, setStaffTab]               = useState<StaffTab>('officer')
   const [staffForm, setStaffForm]             = useState({ email: '', password: '' })
@@ -149,7 +145,12 @@ export default function LoginPage() {
           className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5"
           style={{ background: '#FFFFFF', boxShadow: '0 2px 12px rgba(0,0,0,0.25)' }}
         >
-          <City size={32} weight="duotone" color="#111827" />
+          <img
+            src="/apple-touch-icon.png"
+            alt="CivicPulse logo"
+            className="rounded-xl object-cover"
+            style={{ width: '52.8px', height: '52.8px' }}
+          />
         </motion.div>
 
         <motion.div
@@ -198,7 +199,7 @@ export default function LoginPage() {
         className="flex-1 px-5 pt-6 pb-10 max-w-sm mx-auto w-full"
       >
         {/* Mode tabs */}
-        <div className="flex rounded-xl p-1 gap-1 mb-5" style={{ background: '#F3F4F6' }}>
+        <div className="flex rounded-xl p-1 gap-1 mb-6" style={{ background: '#F3F4F6' }}>
           {([['google', 'Google', GoogleLogo], ['email', 'Email', Envelope]] as const).map(([mode, label, Icon]) => (
             <button
               key={mode}
@@ -281,20 +282,14 @@ export default function LoginPage() {
                   leadingIcon={<Phone size={16} weight="bold" />}
                 />
               )}
-              <div className="relative">
-                <Input
-                  type={showCitizenPw ? 'text' : 'password'}
-                  label="Password"
-                  placeholder={citizenFormMode === 'register' ? 'Min 8 characters' : 'Your password'}
-                  value={citizenForm.password}
-                  onChange={e => { setCitizenForm(f => ({ ...f, password: e.target.value })); setCitizenError(null) }}
-                  leadingIcon={<Lock size={16} weight="bold" />}
-                />
-                <button type="button" onClick={() => setShowCitizenPw(v => !v)}
-                  className="absolute right-3 top-[34px] text-[#9CA3AF]">
-                  {showCitizenPw ? <EyeSlash size={16} weight="bold" /> : <Eye size={16} weight="bold" />}
-                </button>
-              </div>
+              <Input
+                type="password"
+                label="Password"
+                placeholder={citizenFormMode === 'register' ? 'Min 8 characters' : 'Your password'}
+                value={citizenForm.password}
+                onChange={e => { setCitizenForm(f => ({ ...f, password: e.target.value })); setCitizenError(null) }}
+                leadingIcon={<Lock size={16} weight="bold" />}
+              />
 
               <Button type="submit" fullWidth size="lg" isLoading={citizenLoading}
                 loadingText={citizenFormMode === 'register' ? 'Creating…' : 'Signing in…'}
@@ -320,7 +315,7 @@ export default function LoginPage() {
         )}
 
         {/* Staff divider */}
-        <div className="flex items-center gap-3 my-7">
+        <div className="flex items-center gap-3 mt-20 mb-7">
           <span className="flex-1 h-px bg-[#E5E7EB]" />
           <span className="text-[11px] text-[#9CA3AF] font-semibold tracking-wider uppercase">Staff Access</span>
           <span className="flex-1 h-px bg-[#E5E7EB]" />

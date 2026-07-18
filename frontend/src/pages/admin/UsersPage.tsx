@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Users, Search, Plus, X, User, Mail, Phone, Lock,
   RefreshCcw, AlertCircle, CheckCircle, Trash2,
-  Edit3, Eye, EyeOff,
+  Edit3,
 } from 'lucide-react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
@@ -79,7 +79,6 @@ function UserModal({ editUser, onClose, onSuccess }: ModalProps) {
     zone_id:   editUser?.zone_id   ? String(editUser.zone_id) : '',
     is_active: editUser?.is_active ?? true,
   })
-  const [showPw, setShowPw] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [apiError, setApiError] = useState<string | null>(null)
 
@@ -142,15 +141,15 @@ function UserModal({ editUser, onClose, onSuccess }: ModalProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
+      className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-6 sm:items-center sm:px-0 sm:pt-0"
     >
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm md:left-[-100px] md:right-[-100px] md:top-0 md:bottom-0" onClick={onClose} />
       <motion.div
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 80, opacity: 0 }}
         transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-        className="relative w-full max-w-md bg-white rounded-t-3xl sm:rounded-3xl p-6 pb-8 z-10 max-h-[92dvh] overflow-y-auto"
+        className="relative w-full max-w-md bg-white rounded-3xl sm:rounded-3xl p-6 pb-8 z-10 max-h-[92dvh] overflow-y-auto md:mx-[-100px] md:w-[calc(100%+200px)]"
         style={{ boxShadow: '0 -8px 40px rgba(15,23,42,0.15)' }}
       >
         {/* Header */}
@@ -226,24 +225,15 @@ function UserModal({ editUser, onClose, onSuccess }: ModalProps) {
           />
 
           {/* Password */}
-          <div className="relative">
-            <Input
-              type={showPw ? 'text' : 'password'}
-              label={isEdit ? 'New Password (leave blank to keep)' : 'Password'}
-              placeholder="Min 8 characters"
-              value={form.password}
-              onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
-              error={errors.password}
-              leadingIcon={<Lock size={15} />}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPw(v => !v)}
-              className="absolute right-3 top-[34px] text-[#9CA3AF]"
-            >
-              {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
-            </button>
-          </div>
+          <Input
+            type="password"
+            label={isEdit ? 'New Password (leave blank to keep)' : 'Password'}
+            placeholder="Min 8 characters"
+            value={form.password}
+            onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+            error={errors.password}
+            leadingIcon={<Lock size={15} />}
+          />
 
           {/* Role */}
           <div>
@@ -328,9 +318,9 @@ function DeleteConfirm({ user, onClose }: { user: UserListItem; onClose: () => v
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center px-4"
+      className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-3 sm:items-center sm:px-0 sm:pt-0"
     >
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm md:left-[-100px] md:right-[-100px] md:top-0 md:bottom-0" onClick={onClose} />
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -408,31 +398,31 @@ export default function AdminUsersPage() {
       className="flex flex-col min-h-dvh bg-[#F9FAFB]"
     >
       {/* Mobile top bar */}
-      <TopBar
-        title="Users"
-        showBack
-        rightElement={
-          <div className="flex gap-2">
-            <Button variant="ghost" size="sm" onClick={() => refetch()}>
-              <RefreshCcw size={15} />
-            </Button>
-            <Button size="sm" onClick={() => setShowCreate(true)} className="gap-1.5">
-              <Plus size={15} />
-              Add
-            </Button>
-          </div>
-        }
-      />
+      <div className="md:hidden">
+        <TopBar
+          title="Users"
+          showBack
+          rightElement={
+            <div className="flex gap-2">
+              <Button variant="ghost" size="sm" onClick={() => refetch()}>
+                <RefreshCcw size={15} />
+              </Button>
+              <Button size="sm" onClick={() => setShowCreate(true)} leftIcon={<Plus size={15} />} className="whitespace-nowrap">
+                Add
+              </Button>
+            </div>
+          }
+        />
+      </div>
 
       {/* Desktop header bar — hidden on mobile */}
-      <div className="hidden md:flex items-center justify-between px-6 py-4 bg-white border-b border-[#E5E7EB]">
+      <div className="hidden md:flex items-center justify-between px-5 py-4 bg-white border-b border-[#E5E7EB] md:mx-[-100px] md:w-[calc(100%+200px)]">
         <h1 className="text-lg font-bold text-[#111827]">Users</h1>
         <div className="flex gap-2">
           <Button variant="ghost" size="sm" onClick={() => refetch()}>
             <RefreshCcw size={15} />
           </Button>
-          <Button size="sm" onClick={() => setShowCreate(true)} className="gap-1.5">
-            <Plus size={15} />
+          <Button size="sm" onClick={() => setShowCreate(true)} leftIcon={<Plus size={15} />} className="whitespace-nowrap">
             Add User
           </Button>
         </div>

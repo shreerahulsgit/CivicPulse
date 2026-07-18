@@ -128,7 +128,7 @@ function AssignmentSheet({ officer, onClose }: { officer: any; onClose: () => vo
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
+      className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-3 sm:items-center sm:px-0 sm:pt-0"
     >
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
 
@@ -341,31 +341,31 @@ export default function AdminOfficersPage() {
       className="flex flex-col min-h-dvh bg-[#F9FAFB]"
     >
       {/* Mobile top bar */}
-      <TopBar
-        title="Officers"
-        showBack
-        rightElement={
-          <div className="flex gap-2">
-            <Button variant="ghost" size="sm" onClick={() => refetch()}>
-              <RefreshCcw size={15} />
-            </Button>
-            <Button size="sm" onClick={() => setShowModal(true)} className="gap-1.5">
-              <Plus size={15} />
-              Add
-            </Button>
-          </div>
-        }
-      />
+      <div className="md:hidden">
+        <TopBar
+          title="Officers"
+          showBack
+          rightElement={
+            <div className="flex gap-2">
+              <Button variant="ghost" size="sm" onClick={() => refetch()}>
+                <RefreshCcw size={15} />
+              </Button>
+              <Button size="sm" onClick={() => setShowModal(true)} leftIcon={<Plus size={15} />} className="whitespace-nowrap">
+                Add
+              </Button>
+            </div>
+          }
+        />
+      </div>
 
       {/* Desktop header bar — hidden on mobile */}
-      <div className="hidden md:flex items-center justify-between px-6 py-4 bg-white border-b border-[#E5E7EB]">
+      <div className="hidden md:flex items-center justify-between px-5 py-4 bg-white border-b border-[#E5E7EB] md:mx-[-100px] md:w-[calc(100%+200px)]">
         <h1 className="text-lg font-bold text-[#111827]">Officers</h1>
         <div className="flex gap-2">
           <Button variant="ghost" size="sm" onClick={() => refetch()}>
             <RefreshCcw size={15} />
           </Button>
-          <Button size="sm" onClick={() => setShowModal(true)} className="gap-1.5">
-            <Plus size={15} />
+          <Button size="sm" onClick={() => setShowModal(true)} leftIcon={<Plus size={15} />} className="whitespace-nowrap">
             Add Officer
           </Button>
         </div>
@@ -468,15 +468,15 @@ export default function AdminOfficersPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
+            className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-6 sm:items-center sm:px-0 sm:pt-0"
           >
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setShowModal(false)} />
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm md:left-[-100px] md:right-[-100px] md:top-0 md:bottom-0" onClick={() => setShowModal(false)} />
             <motion.div
               initial={{ y: 100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 100, opacity: 0 }}
               transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-              className="relative w-full max-w-md bg-white rounded-t-3xl sm:rounded-3xl p-6 pb-8 z-10"
+              className="relative w-full max-w-md bg-white rounded-3xl sm:rounded-3xl p-6 pb-8 z-10 md:mx-[-100px] md:w-[calc(100%+200px)]"
               style={{ boxShadow: '0 -8px 40px rgba(15,23,42,0.12)' }}
             >
               <div className="flex items-center justify-between mb-6">

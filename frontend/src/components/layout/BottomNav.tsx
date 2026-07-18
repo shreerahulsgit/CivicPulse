@@ -86,7 +86,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 inset-x-0 z-50"
+      className="fixed bottom-0 inset-x-0 z-50 md:hidden"
       role="navigation"
       aria-label="Main navigation"
     >
@@ -99,6 +99,7 @@ export function BottomNav() {
           style={{
             height: 'var(--bottom-nav-h)',
             paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+            boxSizing: 'content-box',
           }}
         >
           {tabs.map(({ to, label, Icon, showBadge }) => {

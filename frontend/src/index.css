@@ -77,7 +77,7 @@
   --page-x:                  1rem;
   --page-top:                1rem;
   --bottom-nav-h:            64px;
-  --top-bar-h:               56px;
+  --top-bar-h:               64px;
   --safe-bottom:             env(safe-area-inset-bottom, 16px);
 
   /* -- Border Radius ------------------------------------------------------- */

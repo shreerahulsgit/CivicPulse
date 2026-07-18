@@ -149,7 +149,7 @@ export const spacing = {
   pageX:        '16px',  // horizontal page padding
   pageTop:      '16px',  // page top padding
   bottomNavH:   '64px',  // bottom nav height
-  topBarH:      '56px',  // top bar height
+  topBarH:      '64px',  // top bar height
   safeBottom:   'env(safe-area-inset-bottom, 16px)',
 } as const
 

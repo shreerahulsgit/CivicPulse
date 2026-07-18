@@ -13,7 +13,6 @@ import {
   MagnifyingGlass,
   X,
   Bell,
-  City,
   SignOut,
 } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
@@ -66,7 +65,7 @@ export function TopBar({
   return (
     <header
       className={cn(
-        'sticky top-0 z-40',
+        'sticky top-0 z-40 md:mx-[-100px] md:w-[calc(100%+200px)]',
         transparent
           ? 'bg-transparent'
           : 'bg-white border-b border-[#E5E7EB]',
@@ -188,17 +187,21 @@ export function BrandTopBar({ unreadCount = 0, onBellClick, className }: BrandTo
 
   return (
     <header
-      className={cn('sticky top-0 z-40 bg-white border-b border-[#E5E7EB]', className)}
+      className={cn('sticky top-0 z-40 bg-white border-b border-[#E5E7EB] md:mx-[-100px] md:w-[calc(100%+200px)]', className)}
       style={{ height: 'var(--top-bar-h)' }}
     >
       <div className="flex items-center h-full px-4 gap-3">
         {/* Brand icon */}
         <div
-          className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+          className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 overflow-hidden"
           style={{ background: '#111827', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
 
         >
-          <City size={18} weight="duotone" color="white" />
+          <img
+            src="/apple-touch-icon.png"
+            alt="CivicPulse"
+            className="w-full h-full object-cover"
+          />
         </div>
 
         <div className="flex-1 min-w-0">

@@ -198,18 +198,18 @@ export default function AdminDashboardPage() {
                 onClick={() => navigate(ROUTES.ADMIN_COMPLAINTS)}
               />
               <QuickLink
-                icon={Users}
-                title="Officers"
-                desc="Create & assign field officers"
-                color="#10B981"
-                onClick={() => navigate(ROUTES.ADMIN_OFFICERS)}
-              />
-              <QuickLink
                 icon={Building2}
                 title="Departments"
                 desc="Department-wise resolution metrics"
                 color="#F59E0B"
                 onClick={() => navigate(ROUTES.ADMIN_DEPARTMENTS)}
+              />
+              <QuickLink
+                icon={Users}
+                title="Users"
+                desc="View and manage user accounts"
+                color="#10B981"
+                onClick={() => navigate(ROUTES.ADMIN_USERS)}
               />
               <QuickLink
                 icon={Calendar}

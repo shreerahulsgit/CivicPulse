@@ -61,7 +61,7 @@ export default function ZonalLayout() {
       </header>
 
       {/* ── Page content ─────────────────────────────────────────────── */}
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto md:px-[100px]">
         <Outlet />
       </main>
 

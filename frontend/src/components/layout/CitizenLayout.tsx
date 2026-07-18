@@ -13,7 +13,7 @@ export default function CitizenLayout() {
       <Sidebar />
 
       {/* Main content area — takes remaining width, clips horizontal overflow */}
-      <main className="flex-1 min-w-0 overflow-x-hidden">
+      <main className="flex-1 min-w-0 overflow-x-hidden md:ml-60 md:px-[100px]">
         <Outlet />
       </main>
 

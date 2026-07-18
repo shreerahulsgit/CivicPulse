@@ -8,7 +8,7 @@
 import { NavLink } from 'react-router-dom'
 import {
   Home, PlusCircle, Bell, User, ClipboardList,
-  LayoutDashboard, Users, BarChart3, Building2,
+  LayoutDashboard, AlertTriangle, Users, BarChart3, Building2,
   LogOut, ChevronRight, UserCircle2,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -33,6 +33,7 @@ const ADMIN_LINKS = [
   { to: ROUTES.ADMIN_DASHBOARD,   label: 'Dashboard',   Icon: LayoutDashboard },
   { to: ROUTES.ADMIN_ANALYTICS,   label: 'Analytics',   Icon: BarChart3 },
   { to: ROUTES.ADMIN_COMPLAINTS,  label: 'Complaints',  Icon: ClipboardList },
+  { to: ROUTES.ADMIN_ESCALATED,   label: 'Escalated',   Icon: AlertTriangle },
   { to: ROUTES.ADMIN_OFFICERS,    label: 'Officers',    Icon: Users },
   { to: ROUTES.ADMIN_USERS,       label: 'Users',       Icon: UserCircle2 },
   { to: ROUTES.ADMIN_DEPARTMENTS, label: 'Departments', Icon: Building2 },
@@ -43,25 +44,29 @@ export function Sidebar() {
   const links = isAdmin ? ADMIN_LINKS : isAnyOfficer ? OFFICER_LINKS : CITIZEN_LINKS
 
   return (
-    <aside className="hidden md:flex flex-col w-60 shrink-0 border-r border-border bg-white h-screen sticky top-0">
+    <aside className="hidden md:flex fixed inset-y-0 left-0 z-40 w-60 flex-col border-r border-border bg-white h-dvh overflow-hidden">
       {/* Brand */}
-      <div className="px-6 py-5 border-b border-border">
+      <div className="px-6 py-4 border-b border-border">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-white text-sm font-bold">CP</span>
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center overflow-hidden">
+            <img
+              src="/apple-touch-icon.png"
+              alt="CivicPulse"
+              className="w-full h-full object-cover"
+            />
           </div>
           <span className="text-[17px] font-bold text-primary tracking-tight">CivicPulse</span>
+          {isAdmin && (
+            <span className="inline-block text-[10px] font-semibold uppercase tracking-wider text-danger bg-danger-muted px-2 py-0.5 rounded-full">
+              Admin
+            </span>
+          )}
+          {isAnyOfficer && (
+            <span className="inline-block text-[10px] font-semibold uppercase tracking-wider text-[#111827] bg-[#EEF2FF] px-2 py-0.5 rounded-full">
+              Officer
+            </span>
+          )}
         </div>
-        {isAdmin && (
-          <span className="mt-1.5 inline-block text-[10px] font-semibold uppercase tracking-wider text-danger bg-danger-muted px-2 py-0.5 rounded-full">
-            Admin
-          </span>
-        )}
-        {isAnyOfficer && (
-          <span className="mt-1.5 inline-block text-[10px] font-semibold uppercase tracking-wider text-[#111827] bg-[#EEF2FF] px-2 py-0.5 rounded-full">
-            Officer
-          </span>
-        )}
       </div>
 
       {/* Nav links */}
